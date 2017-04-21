@@ -30,10 +30,20 @@ class DisplayVenue extends BaseController
      */
     public function execute()
     {
-        // ?ee_route=venue_details&venue_id=61
-        $venue = $this->view_model->getModel()->get_one_by_ID(
-            $this->request->get('venue_id')
-        );
+        global $post;
+        if (
+            $post instanceof \WP_Post
+            && $post->post_type === 'espresso_venues'
+            && $post->EE_Venue instanceof EE_Venue
+        ) {
+            $venue = $post->EE_Venue;
+        } else {
+            $venue_id = $this->request->get('venue_id');
+            if (! $venue_id) {
+                return;
+            }
+            $venue = $this->view_model->getModel()->get_one_by_ID($venue_id);
+        }
         if (! $venue instanceof EE_Venue) {
             return;
         }
