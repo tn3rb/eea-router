@@ -64,7 +64,7 @@ add_action(
                 '\EspressoRouter\presentation\views\events\EventThumbnail',
                 'execute',
                 array(),
-                'AHEE__Router__replace_the_content',
+                'AHEE__Router__before_the_content',
                 '/events/' // '/events/'
             )
         );
@@ -77,7 +77,7 @@ add_action(
                 '\EspressoRouter\presentation\views\venues\VenueView',
                 'execute',
                 array(),
-                'AHEE__Router__replace_the_content',
+                'AHEE__Router__before_the_content',
                 '/'  // '/venues/'
             )
         );
@@ -92,30 +92,40 @@ add_action(
 add_filter(
     'the_content',
     function($the_content){
-        ob_start();
-        do_action('AHEE__Router__before_the_content');
-        return ob_get_clean() . $the_content;
+        if (has_action('AHEE__Router__before_the_content')){
+            ob_start();
+            do_action('AHEE__Router__before_the_content');
+            return ob_get_clean() . $the_content;
+        }
+        return $the_content;
     },
-    -100
-);
-
-add_filter(
-    'the_content',
-    function(){
-        ob_start();
-        do_action('AHEE__Router__replace_the_content');
-        return ob_get_clean();
-    }
+    999
 );
 
 add_filter(
     'the_content',
     function($the_content){
-        ob_start();
-        do_action('AHEE__Router__after_the_content');
-        return $the_content . ob_get_clean();
+        if (has_action('AHEE__Router__replace_the_content')) {
+            ob_start();
+            do_action('AHEE__Router__replace_the_content');
+            return ob_get_clean();
+        }
+        return $the_content;
     },
-    100
+    999
+);
+
+add_filter(
+    'the_content',
+    function($the_content){
+        if (has_action('AHEE__Router__after_the_content')) {
+            ob_start();
+            do_action('AHEE__Router__after_the_content');
+            return $the_content . ob_get_clean();
+        }
+        return $the_content;
+    },
+    999
 );
 
 
