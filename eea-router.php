@@ -37,7 +37,7 @@ Controllers with Views, using a completely decoupled system that promotes reusab
  *
  * ------------------------------------------------------------------------
  */
-use EspressoRouter\application\services\routers\Route;
+use EspressoRouter\application\entities\routes\Route;
 use EventEspresso\core\exceptions\ExceptionStackTraceDisplay;
 
 define('EE_ROUTER_BASE_PATH', plugin_dir_path(__FILE__));
@@ -55,6 +55,8 @@ add_action(
             $CoffeeShop,
             EE_Registry::instance()->load_core('EE_Request')
         );
+        // try  ?ee_route=event_details&event_id=59
+        // or   /events/*/?ee_route=event_details
         $router->addRoute(
             Route::getRoute(
                 'event_details',
@@ -63,9 +65,11 @@ add_action(
                 'execute',
                 array(),
                 'AHEE__Router__replace_the_content',
-                '/events/'
+                '/events/' // '/events/'
             )
         );
+        // try  ?ee_route=venue_details&venue_id=61
+        // or   /venues/*/?ee_route=venue_details
         $router->addRoute(
             Route::getRoute(
                 'venue_details',
@@ -74,7 +78,7 @@ add_action(
                 'execute',
                 array(),
                 'AHEE__Router__replace_the_content',
-                '/venues/'
+                '/'  // '/venues/'
             )
         );
         try {
@@ -92,7 +96,7 @@ add_filter(
         do_action('AHEE__Router__before_the_content');
         return ob_get_clean() . $the_content;
     },
-    -999
+    -100
 );
 
 add_filter(
@@ -111,7 +115,7 @@ add_filter(
         do_action('AHEE__Router__after_the_content');
         return $the_content . ob_get_clean();
     },
-    999
+    100
 );
 
 
