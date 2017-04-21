@@ -148,8 +148,6 @@ abstract class View implements ViewInterface
      */
     public function display()
     {
-        // \EEH_Debug_Tools::printr(__FUNCTION__, get_class($this), __FILE__, __LINE__, 2);
-        // \EEH_Debug_Tools::printr($this->view_model->getName(), '$this->view_model->getName()', __FILE__, __LINE__);
         $this->preTemplateRender();
         foreach ($this->getViews() as $view_identifier => $view) {
             // if any sub Views are using the same ViewModel as us, then share our ViewModel's model object
