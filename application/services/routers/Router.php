@@ -4,6 +4,7 @@ namespace EspressoRouter\application\services\routers;
 
 use DomainException;
 use EE_Request;
+use EspressoRouter\application\entities\routes\Route;
 use EspressoRouter\presentation\controllers\BaseController;
 use EspressoRouter\presentation\views\ViewInterface;
 use EventEspresso\core\exceptions\ExceptionStackTraceDisplay;
@@ -67,7 +68,7 @@ class Router
         $this->request = $request;
         $this->routes = $routes instanceof Collection
             ? $routes
-            : new Collection('\EspressoRouter\application\services\routers\Route');
+            : new Collection('\EspressoRouter\application\entities\routes\Route');
     }
 
 
