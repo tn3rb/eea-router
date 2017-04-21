@@ -1,6 +1,6 @@
 <?php
 
-namespace EspressoRouter\application\services\routers;
+namespace EspressoRouter\application\entities\routes;
 
 defined('EVENT_ESPRESSO_VERSION') || exit;
 
@@ -311,4 +311,4 @@ class Route
 
 }
 // End of file Route.php
-// Location: /application/services/routers/Route.php
+// Location: /application/entities/routes/Route.php
