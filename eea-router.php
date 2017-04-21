@@ -40,6 +40,27 @@ Controllers with Views, using a completely decoupled system that promotes reusab
 use EspressoRouter\application\entities\routes\Route;
 use EventEspresso\core\exceptions\ExceptionStackTraceDisplay;
 
+/*
+ * **************  IMPORTANT **************
+ *
+ * There are two minor changes that need to happen in core
+ * before you can use the following examples/demonstrations.
+ * These issues would be corrected before merging this to core.
+ *
+ * 1) in EE_Load_Espresso_Core::handle_request() around line 84
+ * change:
+ * 		// $CoffeeShop = $OpenCoffeeShop->CoffeeShop();
+ * to
+ * 		global $CoffeeShop;
+ * 		$CoffeeShop = $OpenCoffeeShop->CoffeeShop();
+ *
+ * 2) in EE_Request::__construct() around line 78
+ * change:
+ *        $this->_get = (array)$get;
+ * to
+ *        $this->_get = ! empty($get) ? (array)$get : $_GET;
+ */
+
 define('EE_ROUTER_BASE_PATH', plugin_dir_path(__FILE__));
 add_action(
     'AHEE__EE_System__construct__begin',
