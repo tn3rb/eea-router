@@ -131,18 +131,16 @@ class Router
     private function resolveRoute()
     {
         $route_id = $this->request->get(Route::URL_PARAMETER);
-        if (! $route_id) {
-            return null;
-        }
         $request_uri = filter_input(INPUT_SERVER, 'REQUEST_URI', FILTER_SANITIZE_URL);
         foreach ($this->routes as $route) {
             /** @var Route $route */
             if (strpos($request_uri, $route->basePath()) !== 0) {
                 continue;
             }
-            if ($route->identifier() === $route_id) {
+            if ($route_id !== null && $route_id === $route->identifier()) {
                 return $route;
             }
+            // todo add regex based comparison so that a basePath like /events/*/ can be used to detect a route
         }
         return null;
     }
