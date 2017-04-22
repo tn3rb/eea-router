@@ -37,8 +37,11 @@ Controllers with Views, using a completely decoupled system that promotes reusab
  *
  * ------------------------------------------------------------------------
  */
-use EspressoRouter\application\entities\routes\Route;
+use EspressoRouter\application\entities\routes\ExampleRouteConfig;
+use EspressoRouter\application\services\routers\Router;
 use EventEspresso\core\exceptions\ExceptionStackTraceDisplay;
+use EventEspresso\core\services\container\CoffeeMaker;
+use EventEspresso\core\services\container\CoffeeShop;
 
 /*
  * **************  IMPORTANT **************
@@ -71,37 +74,22 @@ add_action(
 add_action(
     'AHEE__EE_System__load_controllers__start',
     function() {
-        global $CoffeeShop;
-        $router = new EspressoRouter\application\services\routers\Router(
-            $CoffeeShop,
-            EE_Registry::instance()->load_core('EE_Request')
+        global /** @var CoffeeShop $CoffeeShop */
+        $CoffeeShop;
+        /** @var Router $router */
+        $router = $CoffeeShop->brew(
+            'EspressoRouter\application\services\routers\Router',
+            array(
+                $CoffeeShop,
+                $CoffeeShop->brew('EE_Request'),
+            ),
+            CoffeeMaker::BREW_SHARED
         );
-        // try  ?ee_route=event_details&event_id=59
-        // or   /events/*/?ee_route=event_details
-        $router->addRoute(
-            Route::getRoute(
-                'event_details',
-                '\EspressoRouter\presentation\controllers\events\DisplayEvent',
-                '\EspressoRouter\presentation\views\events\EventThumbnail',
-                'execute',
-                array(),
-                'AHEE__Router__before_the_content',
-                '/events/' // '/events/'
-            )
+        /** @var ExampleRouteConfig $route_config */
+        $route_config = $CoffeeShop->brew(
+            '\EspressoRouter\application\entities\routes\ExampleRouteConfig'
         );
-        // try  ?ee_route=venue_details&venue_id=61
-        // or   /venues/*/?ee_route=venue_details
-        $router->addRoute(
-            Route::getRoute(
-                'venue_details',
-                '\EspressoRouter\presentation\controllers\venues\DisplayVenue',
-                '\EspressoRouter\presentation\views\venues\VenueView',
-                'execute',
-                array(),
-                'AHEE__Router__before_the_content',
-                '/'  // '/venues/'
-            )
-        );
+        $route_config->addRoutes();
         try {
             $router->dispatch();
         } catch (Exception $exception) {
@@ -148,6 +136,9 @@ add_filter(
     },
     999
 );
+
+
+
 
 
 // End of file: eea-router.php
