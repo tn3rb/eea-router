@@ -24,6 +24,10 @@ class Route
     const METHOD_GET = 'GET';
     const METHOD_POST = 'POST';
 
+    // default constructor parameters
+    const DEFAULT_HOOK = 'loop_start';
+    const DEFAULT_METHOD = 'execute';
+    const DEFAULT_BASE_PATH = '/';
 
     /**
      * Name of the WP action hook to use for loading the BaseController
@@ -80,7 +84,7 @@ class Route
     private $parameters;
 
     /**
-     * One of the EE_Request::METHOD_* class constants
+     * One of the EE_Request::METHOD_* class constants (temporarily added to this class)
      * defaults to EE_Request::METHOD_GET
      *
      * @var string $type
@@ -111,29 +115,29 @@ class Route
      * @param string $controller
      * @param string $view
      * @param string $method
-     * @param array  $parameters
      * @param string $action
      * @param string $base_path
+     * @param array  $parameters
      * @param string $type
      */
     private function __construct(
         $identifier,
         $controller,
         $view,
-        $method = 'execute',
+        $method = Route::DEFAULT_METHOD,
+        $action = Route::DEFAULT_HOOK,
+        $base_path = Route::DEFAULT_BASE_PATH,
         $parameters = array(),
-        $action = 'AHEE__Router__replace_the_content',
-        $base_path = '/',
         $type = Route::METHOD_GET
     ) {
-        $this->identifier = $identifier;
+        $this->action = $action;
         $this->base_path = $base_path;
         $this->controller = $controller;
-        $this->view = $view;
+        $this->identifier = $identifier;
         $this->method = $method;
         $this->parameters = $parameters;
-        $this->action = $action;
         $this->type = $type;
+        $this->view = $view;
     }
 
 
@@ -143,28 +147,28 @@ class Route
      * @param string $controller
      * @param string $view
      * @param string $method
-     * @param array  $parameters
      * @param string $action
      * @param string $base_path
+     * @param array  $parameters
      * @return Route
      */
-    public static function getRoute(
+    public static function forGetRequest(
         $identifier,
         $controller,
         $view,
-        $method = 'execute',
-        $parameters = array(),
-        $action = 'AHEE__Router__replace_the_content',
-        $base_path = '/'
+        $method = Route::DEFAULT_METHOD,
+        $action = Route::DEFAULT_HOOK,
+        $base_path = Route::DEFAULT_BASE_PATH,
+        $parameters = array()
     ) {
         return new Route(
             $identifier,
             $controller,
             $view,
             $method,
-            $parameters,
             $action,
             $base_path,
+            $parameters,
             Route::METHOD_GET
         );
     }
@@ -176,28 +180,28 @@ class Route
      * @param string $controller
      * @param string $view
      * @param string $method
-     * @param array  $parameters
      * @param string $action
      * @param string $base_path
+     * @param array  $parameters
      * @return Route
      */
-    public static function postRoute(
+    public static function forPostRequest(
         $identifier,
         $controller,
         $view,
-        $method = 'execute',
-        $parameters = array(),
-        $action = 'AHEE__Router__replace_the_content',
-        $base_path = '/'
+        $method = Route::DEFAULT_METHOD,
+        $action = Route::DEFAULT_HOOK,
+        $base_path = Route::DEFAULT_BASE_PATH,
+        $parameters = array()
     ) {
         return new Route(
             $identifier,
             $controller,
             $view,
             $method,
-            $parameters,
             $action,
             $base_path,
+            $parameters,
             Route::METHOD_POST
         );
     }
