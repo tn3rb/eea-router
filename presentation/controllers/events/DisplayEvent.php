@@ -25,9 +25,7 @@ class DisplayEvent extends BaseController
 {
 
     /**
-     * @throws DomainException
-     * @throws EE_Error
-     * @throws InvalidDataTypeException
+     * @return void
      */
     public function execute()
     {
@@ -55,3 +53,5 @@ class DisplayEvent extends BaseController
 }
 // End of file DisplayEvent.php
 // Location: /presentation/controllers/events/DisplayEvent.php
+
+
