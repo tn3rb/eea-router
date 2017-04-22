@@ -20,18 +20,18 @@ $router = new EspressoRouter\application\services\routers\Router(
 ```
 or within a class that has access to the CoffeeShop DI container (since shared access is best)
 ```php
-$router = $this->>coffee_shop->brew(
+$router = $this->coffee_shop->brew(
     'EspressoRouter\application\services\routers\Router',
     array(
-        $this->>coffee_shop,
-        $this->>coffee_shop->brew('EE_Request'),
+        $this->coffee_shop,
+        $this->coffee_shop->brew('EE_Request'),
     ),
     CoffeeMaker::BREW_SHARED
 );
 ```
-once properly configured within the DI container (aliases set, etc), loading would be as easy as:
+once properly configured within the DI container (added as a service, aliases set, etc), loading would be as easy as:
 ```php
-$router = $this->>coffee_shop->get('Router');
+$router = $this->coffee_shop->get('Router');
 ```
 and dispatching the routes (after they have been added)
 ```php
@@ -88,9 +88,9 @@ $route = Route::forPostRequest($identifier, $controller, $view);
 ```
 Routes require a minimum of three parameters: 
 
- * a unique string identifier which can be used as a URL parameter
- * the FQCN for the Controller class to be loaded when the route is executed
- * and the FQCN for the View class to be loaded when the route is executed (for GET requests)
+ * $identifier - a unique string identifier which can be used as a URL parameter
+ * $controller - the FQCN for the Controller class to be loaded when the route is executed
+ * $view - the FQCN for the View class to be loaded when the route is executed (for GET requests)
 
 The additional parameters in order are:
 
