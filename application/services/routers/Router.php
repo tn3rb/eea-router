@@ -62,7 +62,7 @@ class Router
      * @param Collection $routes
      * @throws InvalidInterfaceException
      */
-    public function __construct(CoffeeShop $coffee_shop, EE_Request $request, Collection $routes = null)
+    public function __construct(CoffeeShop $coffee_shop, EE_Request $request, $routes = null)
     {
         $this->coffee_shop = $coffee_shop;
         $this->request = $request;
@@ -113,8 +113,13 @@ class Router
                     $view = $router->getView($route);
                     $controller = $router->getController($route, $view);
                     $controller->{$route->method()}();
-                    $router->assignTemplateData($route, $view);
-                    echo $view->display();
+                    if ($route->type() === Route::METHOD_GET) {
+                        $router->assignTemplateData($route, $view);
+                        echo $view->display();
+                    }
+                    if ($route->type() === Route::METHOD_POST) {
+                        $controller->{$route->method()}();
+                    }
                 } catch (Exception $exception) {
                     new ExceptionStackTraceDisplay($exception);
                 }
