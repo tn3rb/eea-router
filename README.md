@@ -46,7 +46,9 @@ try {
     new ExceptionStackTraceDisplay($exception);
 }
 ```
-It's on the todo list to change the router to use the new abstracted Loader class instead of the CoffeeShop DI container directly in order to reduce coupling.
+It's on the todo list to change the router to use the new abstracted Loader class instead of the CoffeeShop DI container directly in order to reduce coupling. Again, this will all be handled by core and is only being shown here for illustrative purposes. 
+
+Of course, to actually use the Espresso Router, you will need to define some Routes for it to use.
 
 #### Adding Routes
 
