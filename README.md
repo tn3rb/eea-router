@@ -78,7 +78,12 @@ class MyRouteConfig extends RouteConfig
     }
 }
 ```
-Routes would then be registered by core by calling the addRoutes() method.
+Routes would then be registered with core by calling the addRoutes() method.
+
+```php
+$routes_config = $this->coffee_shop->get('MyRouteConfig');
+$routes_config->addRoutes();
+```
 
 ## Routes
 
