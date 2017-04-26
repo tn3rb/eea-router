@@ -13,11 +13,11 @@ defined('EVENT_ESPRESSO_VERSION') || exit;
 
 /**
  * Class View
- * A bridge between controller type classes, Templates, and ModelView classes.
- * A place for common abstracted display related logic, like pagination
- * Should NOT hold any model state, or template data,
+ * A wrapper class used for encapsulating a Template and ModelView class.
+ * Can be a place for common abstracted display related logic (like pagination),
+ * but should NOT hold any model state, or template data,
  * which is contained in the corresponding ModelView.
- * Class follows Composite pattern so Views can be added to Views,
+ * Views follow the Composite pattern, so Views can be added to Views,
  * and calling display() on one will call display() on all subviews.
  *
  * @package       Event Espresso
