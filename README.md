@@ -206,7 +206,7 @@ No problem, you can just create the following four templates:
    * venue-address-inline.php
    * venue-address-multiline.php
    
-But what happens when management decides they want to add another type of contact called presenter whose data is stored somewhere different than in the Contacts. Well you can just add another couple of templates right? Then what if management then wants to add corporate sponsors that require an address, as well as data for organizations that host event, who of course, also have an address that needs displaying. Here's are list of required templates now:
+But what happens when management decides they want to add another type of contact called presenter whose data is stored somewhere different than in the Contacts. Well you can just add another couple of templates right? Then what if management then wants to add corporate sponsors that require an address, as well as data for organizations that host events, who of course, also have an address that needs displaying. Here's are list of required templates now:
 
    * contact-address-inline.php
    * contact-address-multiline.php
@@ -235,7 +235,7 @@ plus a ModelView for each domain model:
    * SponsorModelView
    * VenueModelView
 
-That's only 8 files instead of 15, and the ModelViews can be used with basically any Template that needs to pull data from their corresponding domain model.
+That's only 8 files instead of 15, and the ModelViews can be used with basically any Template that needs to pull data from their corresponding domain model, so they are reusable beyond their use for populating the data for addresses.
 
 But on top of all of that, Views are defined by the Route and loaded by the Router at the same time as the Controller. Since Controllers also have access to the ModelView, they can take input from the request and use it to populate the ModelView with a specific domain model object, which would then be used to populate the View. This creates an extremely extensible and reusable system for generating UI elements.
 
