@@ -237,9 +237,9 @@ plus a ModelView for each domain model:
 
 That's only 8 files instead of 15, and the ModelViews can be used with basically any Template that needs to pull data from their corresponding domain model, so they are reusable beyond their use for populating the data for addresses.
 
-But on top of all of that, Views are defined by the Route and loaded by the Router at the same time as the Controller. Since Controllers also have access to the ModelView, they can take input from the request and use it to populate the ModelView with a specific domain model object, which would then be used to populate the View. This creates an extremely extensible and reusable system for generating UI elements.
+But on top of all of that, Views are defined by the Route and loaded by the Router at the same time as the Controller. Since Controllers also have access to the ModelView, they can take input from the request and use it to populate the ModelView with a specific domain model object, which would then be used to populate the View. So Templates can be reused with multiple ModelViews (and vice versa), which get paired together as a View, and Controllers can be coupled with any View that utilizes the correct domain model that the controller is designed to work with, so they are reusable as well.
 
-Templates can be reused with multiple ModelViews (and vice versa), which get paired together as a View, and Controllers can be coupled with any View that utilizes the correct domain model that the controller is designed to work with.
+This creates an extremely extensible and reusable system for generating UI elements.
 
 Ultimately the Route has complete control over which domain model is used with which template, simply by defining both the Controller and View.
 
