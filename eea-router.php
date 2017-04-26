@@ -76,21 +76,24 @@ add_action(
     function() {
         global /** @var CoffeeShop $CoffeeShop */
         $CoffeeShop;
-        /** @var Router $router */
-        $router = $CoffeeShop->brew(
-            'EspressoRouter\application\services\routers\Router',
-            array(
-                $CoffeeShop,
-                $CoffeeShop->brew('EE_Request'),
-            ),
-            CoffeeMaker::BREW_SHARED
-        );
-        /** @var ExampleRouteConfig $route_config */
-        $route_config = $CoffeeShop->brew(
-            '\EspressoRouter\application\entities\routes\ExampleRouteConfig'
-        );
-        $route_config->addRoutes();
+        if (!$CoffeeShop instanceof CoffeeShop) {
+            return;
+        }
         try {
+            /** @var Router $router */
+            $router = $CoffeeShop->brew(
+                'EspressoRouter\application\services\routers\Router',
+                array(
+                    $CoffeeShop,
+                    $CoffeeShop->brew('EE_Request'),
+                ),
+                CoffeeMaker::BREW_SHARED
+            );
+            /** @var ExampleRouteConfig $route_config */
+            $route_config = $CoffeeShop->brew(
+                '\EspressoRouter\application\entities\routes\ExampleRouteConfig'
+            );
+            $route_config->addRoutes();
             $router->dispatch();
         } catch (Exception $exception) {
             new ExceptionStackTraceDisplay($exception);
